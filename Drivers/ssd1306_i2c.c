@@ -245,6 +245,36 @@ void WriteBigChar(uint x, uint y, uint8_t ch) {
     }
 }
 
+void WriteLine(int l, uint8_t *str)
+{
+	int y = 8*l;
+	int x = 8*strlen(str);
+	uint8_t buffer[SSD1306_LCDWIDTH/8];
+	
+	//check if l is within bounds
+	if((y < 0) || (y > SSD1306_LCDHEIGHT - 8))
+	{
+		printf("Line Index out of bounds. Min = 0, Max = %d\n", (SSD1306_LCDHEIGHT - 8)/8);
+	}
+	
+	if(x > SSD1306_LCDWIDTH)
+	{
+		snprintf( buffer,  SSD1306_LCDWIDTH/8, str);
+	}
+	if(x < SSD1306_LCDWIDTH)
+	{
+		snprintf(buffer, strlen(str), str);
+		for(int i=strlen(str); i < SSD1306_LCDWIDTH/8; i++)
+			buffer[i] = 0x20; //space character 
+	}
+	x =0;
+	for(int i =0; i < SSD1306_LCDWIDTH/8; i++)
+	{
+		WriteChar(x, y, buffer[i]);
+		x+=8;
+	}	
+}
+
 void WriteString(int x, int y, uint8_t *str) {
     // Cull out any string off the screen
     if (x > SSD1306_LCDWIDTH - 8 || y > SSD1306_LCDHEIGHT - 8)
@@ -267,4 +297,32 @@ void WriteBigString(int x, int y, uint8_t *str) {
     }
 }
 
-
+void WriteBigLine(int l, uint8_t *str)
+{
+	int y = 16*l;
+	int x = 26*strlen(str);
+	uint8_t buffer[SSD1306_LCDWIDTH/16];
+	
+	//check if l is within bounds
+	if((y < 0) || (y > SSD1306_LCDHEIGHT - 16))
+	{
+		printf("Line Index out of bounds. Min = 0, Max = %d\n", (SSD1306_LCDHEIGHT - 16)/16);
+	}
+	
+	if(x > SSD1306_LCDWIDTH)
+	{
+		snprintf( buffer,  SSD1306_LCDWIDTH/16, str);
+	}
+	if(x < SSD1306_LCDWIDTH)
+	{
+		snprintf(buffer, strlen(str), str);
+		for(int i=strlen(str); i < SSD1306_LCDWIDTH/16; i++)
+			buffer[i] = 0x20; //space character 
+	}
+	x =0;
+	for(int i =0; i < SSD1306_LCDWIDTH/16; i++)
+	{
+		WriteBigChar(x, y, buffer[i]);
+		x+=16;
+	}	
+}

@@ -26,7 +26,8 @@ static int DEVICE_ADDRESS = 0x3C;
 #define SSD1306_LCDWIDTH            128
 #define SSD1306_LCDHEIGHT           64
 #define SSD1306_FRAMEBUFFER_SIZE    (SSD1306_LCDWIDTH * SSD1306_LCDHEIGHT / 8)
- 
+ void WriteLine(int l, uint8_t *str);
+ void WriteBigLine(int l, uint8_t *str);
  void WriteBigString(int x, int y, uint8_t *str);
  void WriteString(int x, int y, uint8_t *str);
  void WriteBigChar(uint x, uint y, uint8_t ch);
